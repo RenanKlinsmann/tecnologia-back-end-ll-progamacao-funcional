@@ -1,8 +1,9 @@
 package com.example.demo.entidades;
 
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public class Produto implements Predicate<Produto> {
+public class Produto implements Consumer<Produto> {
 	
 	private Integer id;
 	
@@ -43,9 +44,10 @@ public class Produto implements Predicate<Produto> {
 		this.preco = preco;
 	}
 
+
 	@Override
-	public boolean test(Produto t) {
-		return t.getPreco() <= 200;
+	public void accept(Produto t) {
+		t.setPreco(t.getPreco() +100);
 	}
 
 	
