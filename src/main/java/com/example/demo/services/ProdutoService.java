@@ -1,11 +1,14 @@
 package com.example.demo.services;
 
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.ProdutoFunctionUtils;
 import com.example.demo.entidades.Produto;
 import com.example.demo.repositorios.ProdutoRepositorio;
 
@@ -55,9 +58,43 @@ public class ProdutoService {
 		List<Produto> list = repositorio.findAllProduto();
 		
 
+		/*Consumer<Produto> consu = new Consumer<Produto>() {
+			
+			@Override
+			public void accept(Produto t) {
+				t.setPreco(t.getPreco() +100);
+				
+			}
+		};*/
 		
-		list.forEach(new Produto());
+		/*Consumer<Produto> consu =  p -> p.setPreco(p.getPreco() +100);*/
+		
+		list.forEach(p -> p.setPreco(p.getPreco() +100));
 		
 		return list;
+	}
+	
+	public List<Produto> findAllFunction (){
+		/* 1 - criar um lambda declarado;*/
+		/* 2 - criar um lambda inline;*/
+		
+		List<Produto> list = repositorio.findAllProduto();
+		
+		List<Produto> listUpper = list.stream()
+				.map(new Produto())
+				.collect(Collectors.toList());
+		
+		
+		
+		return listUpper;
+	}
+	
+	public double somaTodos() {
+		List<Produto> list = repositorio.findAllProduto();
+		
+		ProdutoFunctionUtils prod = new ProdutoFunctionUtils();
+		double total = prod.somaProdutos(list, p -> p.getPreco() > 0);
+		
+		return total;
 	}
 }

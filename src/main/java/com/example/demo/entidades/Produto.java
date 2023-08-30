@@ -1,9 +1,10 @@
 package com.example.demo.entidades;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class Produto implements Consumer<Produto> {
+public class Produto implements Function<Produto, Produto>{
 	
 	private Integer id;
 	
@@ -46,8 +47,9 @@ public class Produto implements Consumer<Produto> {
 
 
 	@Override
-	public void accept(Produto t) {
-		t.setPreco(t.getPreco() +100);
+	public Produto apply(Produto t) {
+		t.setNome(t.getNome().toUpperCase());
+		return t;
 	}
 
 	

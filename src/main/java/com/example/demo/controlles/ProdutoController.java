@@ -31,4 +31,16 @@ public class ProdutoController {
 	public List<Produto> findAllConsumer(){
 		return service.findAllConsumer();
 	}
+	
+	@GetMapping("/function")
+	public List<Produto> findAllFunction(){
+		return service.findAllFunction();
+	}
+	
+	@GetMapping("/functionTotal")
+	public double findFunctionTotal(){
+		return service.somaTodos();
+	}
+	
+	
 }
