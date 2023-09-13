@@ -1,5 +1,6 @@
 package com.example.demo.entidades;
 
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -51,6 +52,25 @@ public class Produto implements Function<Produto, Produto>{
 		t.setNome(t.getNome().toUpperCase());
 		return t;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, nome, preco);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Produto other = (Produto) obj;
+		return Objects.equals(id, other.id) && Objects.equals(nome, other.nome) && Objects.equals(preco, other.preco);
+	}
+	
+	
 
 	
 	

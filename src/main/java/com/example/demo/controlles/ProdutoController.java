@@ -42,5 +42,9 @@ public class ProdutoController {
 		return service.somaTodos();
 	}
 	
+	@GetMapping("/stream")
+	public List<Produto> findStream(){
+		return service.funcaoStream();
+	}
 	
 }

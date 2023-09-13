@@ -1,7 +1,12 @@
 package com.example.demo.services;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -37,13 +42,13 @@ public class ProdutoService {
 	
 	public List<Produto> findAllPredicate (){
 		List<Produto> list = repositorio.findAllProduto();
-		/*Predicate<Produto> pred = new Predicate<Produto>() {
+		Predicate<Produto> pred = new Predicate<Produto>() {
 			
 			@Override
 			public boolean test(Produto t) {
 				return t.getPreco() <= 200;
 			}
-		};*/
+		};
 		
 		/*Predicate<Produto> pred = (p) -> p.getPreco() <= 200;*/
 		
@@ -97,4 +102,34 @@ public class ProdutoService {
 		
 		return total;
 	}
+	
+	public List<Produto> funcaoStream() {
+		List<Produto> list = repositorio.findAllProduto();
+		List<Produto> listteste = repositorio.findAllProdutoNovo();
+		Integer um = 1;
+		
+		List<List<Produto>> dupla = new ArrayList<>();
+		dupla.add(listteste);
+		dupla.add(list);
+
+
+		List<Produto> teste = dupla.stream().flatMap(Collection::stream)
+											.filter(distinctByKey(p -> p.getId()))
+											.map((p) -> {p.setNome(p.getNome() + " teste"); return p;})
+											.peek(p -> p.setPreco(p.getPreco() +100))
+											.sorted(Comparator.comparing(Produto::getPreco))
+											.distinct()
+											//.skip(3)
+											.limit(2)
+										    .collect(Collectors.toList());
+		
+		return teste;
+	}
+	
+	public static <T> Predicate<T> distinctByKey(
+		    Function<? super T, ?> keyExtractor) {
+		  
+		    Map<Object, Boolean> seen = new ConcurrentHashMap<>(); 
+		    return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null; 
+		}
 }
