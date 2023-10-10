@@ -47,4 +47,9 @@ public class ProdutoController {
 		return service.funcaoStream();
 	}
 	
+	@GetMapping("/operacoes-terminais-stream")
+	public List<Produto> operacoesTerminaisStream(){
+		return service.operacoesTerminaisStream();
+	}
+	
 }

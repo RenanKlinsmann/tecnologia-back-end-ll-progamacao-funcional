@@ -2,10 +2,8 @@ package com.example.demo.entidades;
 
 import java.util.Objects;
 import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
-public class Produto implements Function<Produto, Produto>{
+public class Produto implements Consumer<Produto>{
 	
 	private Integer id;
 	
@@ -47,11 +45,7 @@ public class Produto implements Function<Produto, Produto>{
 	}
 
 
-	@Override
-	public Produto apply(Produto t) {
-		t.setNome(t.getNome().toUpperCase());
-		return t;
-	}
+
 
 	@Override
 	public int hashCode() {
@@ -69,6 +63,21 @@ public class Produto implements Function<Produto, Produto>{
 		Produto other = (Produto) obj;
 		return Objects.equals(id, other.id) && Objects.equals(nome, other.nome) && Objects.equals(preco, other.preco);
 	}
+	
+	
+
+	@Override
+	public String toString() {
+		return "Produto [id=" + id + ", nome=" + nome + ", preco=" + preco + "]";
+	}
+
+	@Override
+	public void accept(Produto t) {
+		t.setNome("Teste 1");
+		
+	}
+
+	
 	
 	
 
